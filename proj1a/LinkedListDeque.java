@@ -78,5 +78,5 @@ public class LinkedListDeque <T> {
             return getRecursiveHelper(start.next,index--);
         }
     }
-    
+
     }
