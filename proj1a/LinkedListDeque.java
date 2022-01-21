@@ -10,8 +10,8 @@ public class LinkedListDeque <T> {
             this.next = next;
         }
     }
-    int size;
-    Node sentinel;
+    private int size;
+    private Node sentinel;
 
     public LinkedListDeque() {
        this.size = 0;

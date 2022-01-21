@@ -99,11 +99,4 @@ public class ArrayDeque <T> {
         int starter = plusOne(front);
         return items[Math.floorMod(starter+index,items.length)];
     }
-    public ArrayDeque (ArrayDeque other) {
-        items = (T[]) new Object[other.size];
-        front = other.front;
-        last = other.last;
-        size = other.size;
-        System.arraycopy(other.items,0,items,0,other.size);
-    }
 }
