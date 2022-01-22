@@ -94,7 +94,7 @@ public class ArrayDeque <T> {
     }
     public T get(int index){
         if(index >= size){
-            return null;
+            return 0;
         }
         int starter = plusOne(front);
         return items[Math.floorMod(starter+index,items.length)];

@@ -69,13 +69,16 @@ public class LinkedListDeque <T> {
         return ptr.item;
     }
     public T getRecursive(int index){
+        if (index >= size){
+            return null;
+        }
         return getRecursiveHelper(sentinel.next,index);
     }
     private T getRecursiveHelper(Node start,int index){
         if(index == 0){
             return start.item;
         }else {
-            return getRecursiveHelper(start.next,index--);
+            return getRecursiveHelper(start.next,index-1);
         }
     }
 
