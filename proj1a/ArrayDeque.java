@@ -26,7 +26,7 @@ public class ArrayDeque <T> {
         return (index + 1) % items.length;
     }
     private int minusOne(int index){
-        return Math.floorMod(index-1, items.length);
+        return (index - 1 + items.length) % items.length;
     }
     private void resize(int capacity){
         T[] newDeque = (T[]) new Object[capacity];
@@ -57,7 +57,7 @@ public class ArrayDeque <T> {
         }
         items[front] = item;
         front = minusOne(front);
-        size++;
+        size =size + 1;
     }
     public void addLast(T item){
         if(isFull()){
@@ -65,7 +65,7 @@ public class ArrayDeque <T> {
         }
         items[last] = item;
         last = plusOne(last);
-        size--;
+        size++;
     }
     public T removeFirst(){
         if(isSparse()){
