@@ -26,7 +26,7 @@ public class ArrayDeque <T> {
         return (index + 1) % items.length;
     }
     private int minusOne(int index){
-        return Math.floorMod(index, items.length);
+        return Math.floorMod(index-1, items.length);
     }
     private void resize(int capacity){
         T[] newDeque = (T[]) new Object[capacity];
