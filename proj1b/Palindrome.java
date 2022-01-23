@@ -9,11 +9,20 @@ public class Palindrome {
         return result;
     }
     public boolean isPalindrome(String word) {
-        Deque<Character> d = wordToDeque(word);
-        while (d.size() > 1) {
-            if (d.removeFirst() != d.removeLast()) {
-                return false;
-            }
+        return isPalindromeHelper(wordToDeque(word));
+    }
+    public boolean isPalindromeHelper(Deque<Character> w) {
+        while (w.size() > 1){
+            return w.removeFirst() == w.removeLast() && isPalindromeHelper(w);
+        }
+        return true;
+    }
+    public boolean isPalindrome(String word, CharacterComparator cc) {
+        return isPalindromeHelp(wordToDeque(word),cc);
+    }
+    public boolean isPalindromeHelp(Deque<Character> w, CharacterComparator cc){
+        while (w.size() > 1){
+            return cc.equalChars(w.removeFirst(), w.removeLast()) && isPalindromeHelp(w,cc);
         }
         return true;
     }
