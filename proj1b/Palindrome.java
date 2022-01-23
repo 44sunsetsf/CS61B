@@ -11,7 +11,7 @@ public class Palindrome {
     public boolean isPalindrome(String word) {
         return isPalindromeHelper(wordToDeque(word));
     }
-    public boolean isPalindromeHelper(Deque<Character> w) {
+    private boolean isPalindromeHelper(Deque<Character> w) {
         while (w.size() > 1){
             return w.removeFirst() == w.removeLast() && isPalindromeHelper(w);
         }
@@ -20,7 +20,7 @@ public class Palindrome {
     public boolean isPalindrome(String word, CharacterComparator cc) {
         return isPalindromeHelp(wordToDeque(word),cc);
     }
-    public boolean isPalindromeHelp(Deque<Character> w, CharacterComparator cc){
+    private boolean isPalindromeHelp(Deque<Character> w, CharacterComparator cc){
         while (w.size() > 1){
             return cc.equalChars(w.removeFirst(), w.removeLast()) && isPalindromeHelp(w,cc);
         }
