@@ -1,4 +1,5 @@
-public class ArrayDeque <T> {
+public class ArrayDeque<T> {
+
     private T[] items;
     private int front;
     private int last;
@@ -10,28 +11,28 @@ public class ArrayDeque <T> {
         front = 0;
         last = 1;
     }
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
-    public int size(){
+    public int size() {
         return size;
     }
-    private boolean isFull(){
+    private boolean isFull() {
         return size == items.length;
     }
-    private boolean isSparse(){
-        return items.length >= 16 && size < (items.length)/4;
+    private boolean isSparse() {
+        return items.length >= 16 && size < (items.length) / 4;
     }
-    private int plusOne(int index){
+    private int plusOne(int index) {
         return (index + 1) % items.length;
     }
-    private int minusOne(int index){
+    private int minusOne(int index) {
         return (index - 1 + items.length) % items.length;
     }
-    private void resize(int capacity){
+    private void resize(int capacity) {
         T[] newDeque = (T[]) new Object[capacity];
         int oldindex = plusOne(front);
-        for (int newindex = 0;newindex < size;newindex++){
+        for (int newindex = 0; newindex < size; newindex++) {
             newDeque[newindex] = items[oldindex];
             oldindex = plusOne(oldindex);
         }
@@ -39,64 +40,64 @@ public class ArrayDeque <T> {
         front = capacity - 1;
         last = size;
     }
-    private void upsize (){
-       resize(2*size);
+    private void upsize() {
+        resize(2 * size);
     }
-    private void downsize (){
-        resize(items.length/2);
+    private void downsize() {
+        resize(items.length / 2);
     }
-    public void printDeque(){
-        for (int i = plusOne(front);i != last;i = plusOne(i)){
+    public void printDeque() {
+        for (int i = plusOne(front); i != last; i = plusOne(i)) {
             System.out.println(items[i] + " ");
         }
         System.out.println();
     }
-    public void addFirst(T item){
-        if (isFull()){
+    public void addFirst(T item) {
+        if (isFull()) {
             upsize();
         }
         items[front] = item;
         front = minusOne(front);
-        size =size + 1;
+        size = size + 1;
     }
-    public void addLast(T item){
-        if(isFull()){
+    public void addLast(T item) {
+        if (isFull()) {
             upsize();
         }
         items[last] = item;
         last = plusOne(last);
         size++;
     }
-    public T removeFirst(){
-        if(isSparse()){
+    public T removeFirst() {
+        if (isSparse()) {
             downsize();
         }
         int i = plusOne(front);
         T res = items[i];
         items[i] = null;
         front = i;
-        if(!isEmpty()){
+        if (!isEmpty()) {
             size -= 1;
         }
         return res;
     }
     public T removeLast() {
-        if(isSparse()){
+        if (isSparse()) {
             downsize();
         }
         last = minusOne(last);
         T res = items[last];
         items[last] = null;
-        if(!isEmpty()){
+        if (!isEmpty()) {
             size--;
         }
         return res;
     }
-    public T get(int index){
-        if(index >= size){
+    public T get(int index) {
+        if (index >= size) {
             return null;
         }
         int starter = plusOne(front);
-        return items[Math.floorMod(starter+index,items.length)];
+        return items[Math.floorMod(starter + index, items.length)];
     }
 }
