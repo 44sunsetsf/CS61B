@@ -28,7 +28,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return 2 * i;
     }
 
     /**
@@ -36,7 +36,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int rightIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return 2 * i + 1;
     }
 
     /**
@@ -44,7 +44,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int parentIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i / 2;
     }
 
     /**
@@ -108,7 +108,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+        while (index > 1 && contents[index].priority() < contents[parentIndex(index)].priority()) {
+            swap(index, parentIndex(index));
+            index = parentIndex(index);
+        }
+
     }
 
     /**
@@ -119,7 +123,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
-        return;
+        int min = min(leftIndex(index), rightIndex(index));
+        while (contents[min].priority() < contents[index].priority()) {
+            swap(min, index);
+            index = min;
+            min = min(leftIndex(index), rightIndex(index));
+            if (leftIndex(index) > size) {
+                break;
+            }
+        }
     }
 
     /**
@@ -134,16 +146,22 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
+        size++;
+        contents[size] = new Node(item, priority);
+        int index = size;
+        if (index == 1) {
+            return;
+        }
+        swim(index);
     }
 
     /**
      * Returns the Node with the smallest priority value, but does not remove it
-     * from the heap. To implement this, return the item in the 1st position of the ArrayList.
      */
     @Override
     public T peek() {
         /* TODO: Your code here! */
-        return null;
+        return contents[1].item();
     }
 
     /**
@@ -158,11 +176,19 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         /* TODO: Your code here! */
-        return null;
+        swap(1, size);
+        Node rem = contents[size];
+        contents[size] = null;
+        size--;
+        if (size > 1) {
+            int index = 1;
+            sink(index);
+        }
+        return rem.item();
     }
 
     /**
-     * Returns the number of items in the PQ. This is one less than the size
+     * Returns there number of items in the PQ. This is one less than the size
      * of the backing ArrayList because we leave the 0th element empty. This
      * method has been implemented for you.
      */
@@ -181,7 +207,33 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        return;
+        int index =-1;
+        for (int i= 1; i <= size; i++) {
+            if (contents[i].myItem.equals(item)) {
+                index = i;
+            }
+        }
+        if (index == -1) {
+            return;
+        }
+        contents[index].myPriority = priority;
+        if (size == 1) {
+            return;
+        }
+        if (index == 1) {
+            sink(index);
+        }
+        else if (leftIndex(index) > size) {
+            swim(index);
+        }
+        else {
+            if (min(index, parentIndex(index)) == index) {
+                swim(index);
+            }
+            else if (min(index, min(leftIndex(index),rightIndex(index))) !=index) {
+                sink(index);
+            }
+        }
     }
 
     /**
