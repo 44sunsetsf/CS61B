@@ -35,7 +35,14 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+       Queue<Queue<Item>> queues = new Queue<>();
+       Queue<Item> queue;
+       while (!items.isEmpty()) {
+           queue = new Queue<>();
+           queue.enqueue(items.dequeue());
+           queues.enqueue(queue);
+       }
+       return queues;
     }
 
     /**
@@ -54,13 +61,46 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue<Item> queue = new Queue<>();
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            queue.enqueue(getMin(q1, q2));
+        }
+        return queue;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+        Queue<Queue<Item>> sortedQueue = makeSingleItemQueues(items);
+       while (sortedQueue.size() > 1) {
+           Queue<Item> q1 = sortedQueue.dequeue();
+           Queue<Item> q2 = sortedQueue.dequeue();
+           Queue<Item> q3 = mergeSortedQueues(q1, q2);
+           sortedQueue.enqueue(q3);
+       }
+       return sortedQueue.dequeue();
+
+    }
+
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        students.enqueue("Josh");
+        students.enqueue("Hug");
+        students.enqueue("Lee");
+        students.enqueue("wang");
+        students.enqueue("Edward");
+        students.enqueue("Jack");
+
+        Queue<String> newStudents = MergeSort.mergeSort(students);
+        while (!newStudents.isEmpty()) {
+            System.out.println(newStudents.dequeue());
+        }
     }
 }
