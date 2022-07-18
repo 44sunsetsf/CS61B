@@ -70,5 +70,7 @@ public class Percolation {
     private int helper(int row, int col) {
         return (row * arr.length) + col;
     }
-
+    // use for unit testing (not required)
+    public static void main(String[] args) {
+    }
 }
